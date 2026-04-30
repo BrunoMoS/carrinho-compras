@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" type="image/x-icon" href="./assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <title>Carrinho de compras</title>
+</head>
+
+<body>
+  <main class="main-content">
+    <div class="blue-graphic"></div>
+    <section class="add-product">
+      <h1 class="title">
+        Carrinho de <span class="blue-text">compras</span>
+      </h1>
+
+      <form class="form">
+        <label class="group-field">
+          <span class="medium-blue-text">Produto</span>
+          <select class="product-input" name="produto" id="product">
+            <option value="Fone de ouvido - R$100">Fone de ouvido - R$100</option>
+            <option value="Celular - R$2400">Celular - R$2400</option>
+            <option value="Oculus VR - R$5000">Oculus VR - R$5000</option>
+          </select>
+          </div>
+        </label>
+
+        <section class="bottom-part">
+          <label class="group-field">
+            <span class="medium-blue-text">Qtde.</span>
+            <input class="amount-input" id="amount" type="number" >
+          </label>
+
+          <section class="wrapper-buttons">
+            <button onclick="toadd()" type="button" class="form-button add-button">Adicionar</button>
+            <button onclick="toclean()" type="button" class="form-button clean-button">Limpar</button>
+          </section>
+        </section>
+      </form>
+    </section>
+    <section class="cart">
+      <img src="./assets/carrinho-cinza.svg" alt="Imagem de um carrinho de compras cinza">
+
+      <div class="wrapper-title">
+        <img src="./assets/icone-carrinho.svg" alt="ícone de carrinho">
+
+        <h2 class="title__cart">Produtos no carrinho</h2>
+      </div>
+
+      <section class="products__cart" id="product-list">
+        <section class="products__cart__product">
+          <span class="blue-text">1x</span> Celular <span class="blue-text">R$2400</span>
+        </section>
+      </section>
+
+      <div class="divider"></div>
+
+      <p class="total__cart">
+        Total: <span class="blue-text" id="total-value">R$2400</span>
+      </p>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+
+</html>
