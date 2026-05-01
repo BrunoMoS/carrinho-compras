@@ -1,12 +1,5 @@
-// 1. ProductParser
-//    Responsabilidade: extrair nome e preço
-//    de uma string do <select>
-
 const ProductParser = (() => {
-  /**
-   * Espera o formato "Nome do Produto - R$999"
-   * Retorna { name: string, price: number } ou null se inválido.
-   */
+ 
   function parse(selectValue) {
     const parts = selectValue.split(" - R$");
     if (parts.length !== 2) return null;
@@ -22,12 +15,19 @@ const ProductParser = (() => {
   return { parse };
 })();
 
-// 2. CartStore
-//    Responsabilidade: manter e manipular
-//    o estado interno do carrinho (items[])
+/*
+Responsabilidade: pegar o texto selecionado no <select> e separar em nome e preço.
+Como funciona:
+    Espera um formato específico: "Nome do Produto - R$999".
+    Usa split(" - R$") para dividir em duas partes: antes do preço e o valor.
+    Se não tiver exatamente duas partes, retorna null (inválido).
+    Converte o preço para número (parseFloat).
+    Se deu certo, retorna um objeto { name, price }.
+    👉 É como um tradutor: transforma uma string em dados organizados.
+*/
 
 const CartStore = (() => {
-  let items = []; // { name, price, quantity }
+  let items = []; 
 
   function add(product, quantity) {
     const existing = items.find((i) => i.name === product.name);
@@ -53,9 +53,16 @@ const CartStore = (() => {
   return { add, clear, getItems, getTotal };
 })();
 
-// 3. CartRenderer
-//    Responsabilidade: atualizar o DOM com
-//    o estado atual do carrinho
+/*
+Responsabilidade: guardar e manipular os itens do carrinho.
+Como funciona:
+  Mantém uma lista interna items (cada item tem nome, preço e quantidade).
+  add(product, quantity): adiciona produto. Se já existe, soma a quantidade.
+  clear(): limpa o carrinho.
+  getItems(): devolve uma cópia da lista de itens.
+  getTotal(): soma o valor total de todos os itens.
+👉 É como o “banco de dados” do carrinho, onde ficam guardados os produtos.
+*/
 
 const CartRenderer = (() => {
   const productListEl = document.getElementById("product-list");
@@ -84,9 +91,14 @@ const CartRenderer = (() => {
   return { render };
 })();
 
-// 4. FormReader
-//    Responsabilidade: ler e validar os valores
-//    do formulário (produto e quantidade)
+/*
+Responsabilidade: mostrar o carrinho na tela (DOM).
+Como funciona:
+  Pega os elementos do HTML (product-list e total-value).
+  renderItem(item): cria um bloco <section> com nome, quantidade e preço.
+  render(items, total): limpa a lista e adiciona cada item, depois atualiza o total.
+👉 É o “pintor”: pega os dados e desenha na tela.
+*/
 
 const FormReader = (() => {
   const productSelectEl = document.getElementById("product");
@@ -119,9 +131,15 @@ const FormReader = (() => {
   return { read, validate, reset };
 })();
 
-// 5. Notifier
-//    Responsabilidade: exibir mensagens de erro
-//    ou feedback ao usuário
+/*
+Responsabilidade: ler os dados do formulário e validar.
+Como funciona:
+  read(): pega o valor selecionado e a quantidade digitada.
+  validate(): verifica se o produto foi escolhido e se a quantidade é válida (mínimo 1).
+  reset(): limpa o campo quantidade e coloca o foco nele.
+  Também adiciona um evento: quando troca o produto, limpa o campo quantidade.
+👉 É o “leitor”: pega o que o usuário digitou e garante que está certo.
+*/
 
 const Notifier = (() => {
   function warn(message) {
@@ -131,9 +149,12 @@ const Notifier = (() => {
   return { warn };
 })();
 
-// 6. App (Orquestrador)
-//    Responsabilidade: conectar os módulos,
-//    expor as funções chamadas pelo HTML
+/*
+Responsabilidade: avisar o usuário sobre erros.
+Como funciona:
+  warn(message): mostra um alert com a mensagem.
+👉 É o “mensageiro”: dá feedback quando algo está errado.
+*/
 
 function toadd() {
   const formData = FormReader.read();
@@ -160,3 +181,20 @@ function toclean() {
   CartRenderer.render(CartStore.getItems(), CartStore.getTotal());
   FormReader.reset();
 }
+
+/*
+Responsabilidade: juntar todos os módulos e fazer o fluxo funcionar.
+Funções principais:
+  toadd(): quando o usuário adiciona um produto.
+  Lê o formulário.
+  Valida os dados.
+  Converte para { name, price }.
+  Adiciona no carrinho.
+  Atualiza a tela.
+  Reseta o formulário.
+  toclean(): quando o usuário limpa o carrinho.
+  Apaga os itens.
+  Atualiza a tela.
+  Reseta o formulário.
+👉 É o “maestro”: coordena todos os outros módulos para que o sistema funcione.
+*/
